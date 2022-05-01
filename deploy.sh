@@ -2,7 +2,7 @@
 
 #使用说明，用来提示输入参数
 usage() {
-    echo "Usage: sh 执行脚本.sh [|mount|base|stopall|rm|rmiNoneTag]"
+    echo "Usage: sh 执行脚本.sh [|mount|base|stop|rm"
     exit 1
 }
 
@@ -36,18 +36,13 @@ base(){
 }
 
 #关闭所有模块
-stopall(){
+stop(){
     docker-compose stop
 }
 
 #删除所有模块
 rm(){
     docker-compose rm
-}
-
-#删除Tag为空的镜像
-rmiNoneTag(){
-    docker images|grep none|awk '{print $3}'|xargs docker rmi -f
 }
 
 #根据输入参数，选择执行对应方法，不输入则执行使用说明
@@ -58,14 +53,11 @@ case "$1" in
 "base")
     base
 ;;
-"stopall")
-    stopall
+"stop")
+    stop
 ;;
 "rm")
     rm
-;;
-"rmiNoneTag")
-    rmiNoneTag
 ;;
 *)
     usage
