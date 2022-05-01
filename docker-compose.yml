@@ -121,7 +121,7 @@ services:
       dev_net:
         ipv4_address: 172.30.0.58
 
-  nginx-web:
+  nginx:
     image: nginx:latest
     container_name: nginx-web
     environment:
