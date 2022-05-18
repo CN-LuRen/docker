@@ -12,7 +12,7 @@ services:
       # 初始化数据库
       MYSQL_DATABASE: dev
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       # 数据挂载
       - /docker/mysql/data/:/var/lib/mysql/
@@ -31,9 +31,9 @@ services:
     image: nacos/nacos-server:latest
     container_name: nacos
     ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9849:9849"
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
     environment:
       TZ: Asia/Shanghai
       MODE: standalone
@@ -50,7 +50,7 @@ services:
     image: redis:latest
     container_name: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
     environment:
       # 时区上海
       TZ: Asia/Shanghai
@@ -71,9 +71,9 @@ services:
     container_name: minio
     ports:
       # api 端口
-      - "9000:9000"
+      - 9000:9000
       # 控制台端口
-      - "9001:9001"
+      - 9001:9001
     environment:
       # 时区上海
       TZ: Asia/Shanghai
@@ -105,7 +105,7 @@ services:
     image: seataio/seata-server:latest
     container_name: seata-server
     ports:
-      - "8091:8091"
+      - 8091:8091
     environment:
       TZ: Asia/Shanghai
       # 注意 此处ip如果是外网使用 要改为外网ip
@@ -123,13 +123,13 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: nginx-web
+    container_name: nginx
     environment:
       # 时区上海
       TZ: Asia/Shanghai
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       # 证书映射
       - /docker/nginx/cert:/etc/nginx/cert
@@ -143,6 +143,53 @@ services:
     restart: always
     networks:
       - dev_net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+    volumes:
+      - /docker/prometheus/conf/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    restart: always
+    networks:
+      dev_net:
+        ipv4_address: 172.30.0.62
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      dev_net:
+        ipv4_address: 172.30.0.66
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    container_name: redis-exporter
+    command: -redis.addr redis://redis:6379 -redis.password '112233'
+    ports:
+      - 9121:9121
+    networks:
+      dev_net:
+        ipv4_address: 172.30.0.248
+
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql-exporter
+    ports:
+      - 9104:9104
+    environment:
+      # 这里指定的是要监控的 MySQL 数据库
+      - DATA_SOURCE_NAME=root:112233@(mysql:3306)/dev
+    networks:
+      dev_net:
+        ipv4_address: 172.30.0.252
 
 networks:
   dev_net:

@@ -36,6 +36,12 @@ mount(){
         cp seata/registry.conf /docker/seata/conf/registry.conf
         echo "seate --> registry.conf -> /docker"
     fi
+        #挂载 prometheus 配置文件
+    if test ! -f "/docker/prometheus/conf/prometheus.yaml" ;then
+        mkdir -p /docker/prometheus/conf
+        cp prometheus/prometheus.yaml /docker/prometheus/conf/prometheus.yaml
+        echo "prometheus --> prometheus.yaml -> /docker"
+    fi
 }
 
 
