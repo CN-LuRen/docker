@@ -1,5 +1,7 @@
 wget https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
 tar vxf node_exporter-1.3.1.linux-amd64.tar.gz
+cd node_exporter-1.3.1.linux-amd64
+mv node_exporter /usr/local/bin
 cat > /etc/systemd/system/node_exporter.service << EOF
 [Unit]
 Description=node_exporter
