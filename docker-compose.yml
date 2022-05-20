@@ -195,6 +195,7 @@ services:
     container_name: postgres-exporter
     ports:
       - 9187:9187
+    restart: always
     environment:
       # 这里指定的是要监控的 Postgres 数据库
       - DATA_SOURCE_NAME=postgresql://root:112233@postgres:5432/postgres?sslmode=disable
@@ -208,6 +209,7 @@ services:
     command: -redis.addr redis://redis:6379 -redis.password '112233'
     ports:
       - 9121:9121
+    restart: always
     networks:
       dev_net:
         ipv4_address: 172.30.0.248
@@ -217,6 +219,7 @@ services:
     container_name: mysql-exporter
     ports:
       - 9104:9104
+    restart: always
     environment:
       # 这里指定的是要监控的 MySQL 数据库
       - DATA_SOURCE_NAME=root:112233@(mysql:3306)/dev
