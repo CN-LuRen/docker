@@ -8,7 +8,7 @@ services:
       # 时区上海
       TZ: Asia/Shanghai
       # root 密码
-      MYSQL_ROOT_PASSWORD: 112233
+      MYSQL_ROOT_PASSWORD: dev112233
       # 初始化数据库
       MYSQL_DATABASE: dev
     ports:
@@ -80,7 +80,7 @@ services:
       # 管理后台用户名
       MINIO_ROOT_USER: dev
       # 管理后台密码，最小8个字符
-      MINIO_ROOT_PASSWORD: 11223344
+      MINIO_ROOT_PASSWORD: dev112233
       # https需要指定域名
       MINIO_SERVER_URL: ""
       # 开启压缩 on 开启 off 关闭
@@ -178,8 +178,8 @@ services:
     environment:
       # 时区上海
       TZ: Asia/Shanghai
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: 112233
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dev112233
     volumes:
       - /docker/postgres/data:/var/lib/postgresql/data
     ports:
@@ -198,7 +198,7 @@ services:
     restart: always
     environment:
       # 这里指定的是要监控的 Postgres 数据库
-      - DATA_SOURCE_NAME=postgresql://root:112233@postgres:5432/postgres?sslmode=disable
+      - DATA_SOURCE_NAME=postgresql://postgres:dev112233@postgres:5432/postgres?sslmode=disable
     networks:
       dev_net:
         ipv4_address: 172.30.0.244
@@ -206,7 +206,7 @@ services:
   redis-exporter:
     image: oliver006/redis_exporter
     container_name: redis-exporter
-    command: -redis.addr redis://redis:6379 -redis.password '112233'
+    command: -redis.addr redis://redis:6379 -redis.password 'dev112233'
     ports:
       - 9121:9121
     restart: always
@@ -222,7 +222,7 @@ services:
     restart: always
     environment:
       # 这里指定的是要监控的 MySQL 数据库
-      - DATA_SOURCE_NAME=root:112233@(mysql:3306)/dev
+      - DATA_SOURCE_NAME=root:dev112233@(mysql:3306)/dev
     networks:
       dev_net:
         ipv4_address: 172.30.0.252
