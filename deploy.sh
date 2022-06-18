@@ -2,12 +2,13 @@
 
 #使用说明，用来提示输入参数
 usage() {
-    echo "| usage: sh deploy.sh mount stop update start up"
-    echo "| mount |  mount config files to /docker"
-    echo "| stop  |  stop all containers"
-    echo "| update|  update all containers"
-    echo "| start |  start all containers"
-    echo "| up    |  start all containers and exec command"
+    echo "| usage: sh deploy.sh mount stop update start up mirror"
+    echo "| mount  |  mount config files to /docker"
+    echo "| stop   |  stop all containers"
+    echo "| update |  update all containers"
+    echo "| start  |  start all containers"
+    echo "| up     |  start all containers and exec command"
+    echo "| mirror |  update mirrors"
     exit 1
 }
 
@@ -67,6 +68,12 @@ up(){
     docker-compose up -d
 }
 
+#docker换源
+mirror(){
+    mv mirrors/daemon.json /etc/docker/daemon.json
+    systemctl restart docker
+}
+
 
 #根据输入参数，选择执行对应方法，不输入则执行使用说明
 case "$1" in
@@ -84,6 +91,9 @@ case "$1" in
 ;;
 "up")
     up
+;;
+"mirror")
+    mirror
 ;;
 *)
     usage
