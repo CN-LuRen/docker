@@ -70,7 +70,7 @@ up(){
 
 #docker换源
 mirror(){
-    mv mirrors/daemon.json /etc/docker/daemon.json
+    cp mirrors/daemon.json /etc/docker/daemon.json
     systemctl restart docker
 }
 
