@@ -52,7 +52,7 @@ stop(){
 
 #启动容器
 start(){
-    docker-compose up -d
+    docker-compose start
 }
 
 #更新镜像
