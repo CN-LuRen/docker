@@ -44,6 +44,22 @@ mount(){
         cp prometheus/prometheus.yaml /docker/prometheus/conf/prometheus.yaml
         echo "prometheus --> prometheus.yaml -> /docker"
     fi
+
+    if test ! -f "/docker/elk/es/" ;then
+        mkdir -p /docker/elk/es
+        echo "elk --> elasticsearch.yml -> /docker"
+    fi
+
+    if test ! -f "/docker/elk/kibana/" ;then
+        mkdir -p /docker/elk/kibana
+        echo "elk --> kibana.yml -> /docker"
+    fi
+    
+    if test ! -f "/docker/elk/logstash/" ;then
+        mkdir -p /docker/elk/logstash
+        cp elk/logstash/logstash.conf /docker/elk/logstash/logstash.conf
+        echo "elk --> logstash.conf -> /docker"
+    fi
 }
 
 #停止容器
