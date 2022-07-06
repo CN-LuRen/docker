@@ -60,6 +60,16 @@ mount(){
         cp elk/logstash/logstash.conf /docker/elk/logstash/logstash.conf
         echo "elk --> logstash.conf -> /docker"
     fi
+
+    if test ! -f "/docker/kafka/logs/" ;then
+        mkdir -p /docker/kafka/logs
+        echo "kafka --> logs -> /docker"
+    fi
+
+    if test ! -f "/docker/zookeeper/data/" ;then
+        mkdir -p /docker/zookeeper/data
+        echo "zookeeper --> data -> /docker"
+    fi
 }
 
 #停止容器
