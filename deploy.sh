@@ -70,6 +70,12 @@ mount(){
         mkdir -p /docker/zookeeper/data
         echo "zookeeper --> data -> /docker"
     fi
+
+    if test ! -f "/docker/rabbitmq" ;then
+        mkdir -p /docker/rabbitmq/data
+        mkdir -p /docker/rabbitmq/conf
+        echo "rabbitmq --> rabbitmq.conf -> /docker"
+    fi
 }
 
 #停止容器
